@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Category Lookup</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+    <div class="card w-full max-w-md bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h1 class="card-title text-2xl font-bold mb-6 text-center">Claim Category Lookup</h1>
+            <form id="searchForm" class="space-y-4">
+                <div class="form-control">
+                    <label for="serviceDate" class="label">
+                        <span class="label-text">Service Date</span>
+                    </label>
+                    <input type="text" id="serviceDate" name="serviceDate" placeholder="MM/DD/YYYY" class="input input-bordered w-full">
+                </div>
+                <div class="form-control">
+                    <label for="patientName" class="label">
+                        <span class="label-text">Patient Name</span>
+                    </label>
+                    <input type="text" id="patientName" name="patientName" placeholder="Last, First" class="input input-bordered w-full">
+                </div>
+                <div class="form-control">
+                    <label for="patientDOB" class="label">
+                        <span class="label-text">Patient DOB</span>
+                    </label>
+                    <input type="text" id="patientDOB" name="patientDOB" placeholder="MM/DD/YYYY" class="input input-bordered w-full">
+                </div>
+                <div class="form-control">
+                    <label for="payerSubscriberNo" class="label">
+                        <span class="label-text">Payer Subscriber No</span>
+                    </label>
+                    <input type="text" id="payerSubscriberNo" name="payerSubscriberNo" placeholder="Subscriber Number" class="input input-bordered w-full">
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Search Category</button>
+            </form>
+            <div id="result" class="mt-4 text-center font-medium"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            ['05/02/2024', 'TIGUEL', '17/08/1274', 'VGJBH32654675', 'Not Found Category']
+        ];
+
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const serviceDate = document.getElementById('serviceDate').value;
+            const patientName = document.getElementById('patientName').value;
+            const patientDOB = document.getElementById('patientDOB').value;
+            const payerSubscriberNo = document.getElementById('payerSubscriberNo').value;
+
+            const result = data.find(row =>
+                row[0] === serviceDate &&
+                row[1] === patientName &&
+                row[2] === patientDOB &&
+                row[3] === payerSubscriberNo
+            );
+
+            const resultDiv = document.getElementById('result');
+            if (result) {
+                resultDiv.innerHTML = `<div class="alert alert-success"><svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Category: ${result[4]}</span></div>`;
+            } else {
+                resultDiv.innerHTML = '<div class="alert alert-error"><svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Not found.</span></div>';
+            }
+        });
+    </script>
+</body>
+</html>
